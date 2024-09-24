@@ -24,7 +24,7 @@ def load_diabetes_data(file_name, num_vars):
 
         random.shuffle(all_data)
 
-        training_data = all_data[:int((len(all_data)+1)*.50)]
-        test_data = all_data[int((len(all_data)+1)*.50):]
+        training_data = all_data[:int((len(all_data)+1)*.80)]
+        test_data = all_data[int((len(all_data)+1)*.80):]
 
     return training_data, test_data
