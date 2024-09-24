@@ -4,20 +4,24 @@ from load_diabetes import load_diabetes_data
 
 training, test = load_diabetes_data("diabetes_scale.txt", 8)
 
-N = 0.1
+N = 0.001
 T = 1000
 w = np.random.rand(training[0][0].shape[0])
 
 for t in range(T):
 
-    train_sum = 0
+    train_sum = np.zeros(training[0][0].shape[0])
     for i in range(len(training)):
+        y = training[i][1]
+        x = training[i][0]
+        
         try:
-            if training[i][1] * np.dot(training[i][0], w) < 0:
-                train_sum += training[i][1] * training[i][0]
+            if y * np.dot(x, w) < 0:
+                train_sum += y * x
         except:
-            print(f"Warning failed to train on data {training[i][0]}")
+            print(f"Warning failed to train on data {x}")
             pass
+
     w = w + N * train_sum
 
 correct = 0
