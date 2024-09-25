@@ -4,9 +4,9 @@ from load_diabetes import load_diabetes_data
 
 training, test = load_diabetes_data("diabetes_scale.txt", 8)
 
-N = 0.001
-T = 1000
-w = np.random.rand(training[0][0].shape[0])
+N = 0.01
+T = 1000000
+w = np.zeros(training[0][0].shape[0])
 
 for t in range(T):
 
@@ -16,7 +16,7 @@ for t in range(T):
         x = training[i][0]
         
         try:
-            if y * np.dot(x, w) < 0:
+            if y * np.dot(x, w) <= 0:
                 train_sum += y * x
         except:
             print(f"Warning failed to train on data {x}")
@@ -40,4 +40,5 @@ for data in test:
         correct += 1
     total += 1
 
+print(w)
 print((correct/total) * 100)
