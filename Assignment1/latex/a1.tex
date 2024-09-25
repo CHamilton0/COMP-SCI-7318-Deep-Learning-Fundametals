@@ -107,9 +107,9 @@ Prediction using this trained perceptron is then done by taking the dot product 
 
 \[ g(\vec{x}; \vec{w^*}) = y^* = sign(\vec{x} \cdot \vec{w^*} ) \]
 
-Since a weighted sum is used as the input to the perceptron, computers are able to very quickly perform the dot products and summations required for the training of a perceptron, as well as the classification of data. This makes the method very useful to quickly classify linearly separable data into one of two classes, given that the weights have been appropriately set to separate the data for the problem to be solved.
+Since a weighted sum is used as the input to the perceptron, computers are able to very quickly perform the dot products and summations required for the training of a perceptron, as well as the classification of data. This makes the method very useful to quickly classify linearly separable data into one of two classes, given that the weights have been appropriately set to separate the data for the problem to be solved. Setting the weights correctly is the task of the training algorithm that has been outlined above and means that the set of training data points should be large to allow for good generalisation to data points that have not been seen.
 
-The perceptron while able to converge to a prediction for linearly separable data, has some limitations. The first limitation of the perceptron algorithm is that it is only able to converge if the data is linearly separable. This limits the use cases that the perceptron has, a simple example of this is shown in Figure \ref{fig:non-linearly-separable}.
+The perceptron while able to converge to a prediction for linearly separable data, has some limitations. The first limitation of the perceptron algorithm is that it is only able to converge if the data is linearly separable. This limits the use cases that the perceptron has, a simple example of this is shown in Figure \ref{fig:non-linearly-separable}. Since a lot of data in the real world will not be perfectly linearly separable, the perceptron trained and tested on real data is not likely to have 100\% accuracy. However, this may be acceptable in cases where the perceptron is able to accurately classify test data, even though convergence was not achieved. An example of this is shown in Figure \ref{fig:non-linearly-separable-2}. The data contains two classes, but these cannot be linearly separated, any line drawn to separate the points in this two dimensional space will result in some of the data points being classified incorrectly. In the case of Figure \ref{fig:non-linearly-separable}, the perceptron is not a good solution to classify data points into either of the available classes, as the accuracy will be low. However, in the case of Figure \ref{fig:non-linearly-separable-2}, even though the data is not linearly separable, the perceptron is still an effective method for classifying data points, in the example, only three points are incorrectly labelled based on the linear separation provided.
 
 \begin{figure}
     \centering
@@ -118,7 +118,12 @@ The perceptron while able to converge to a prediction for linearly separable dat
     \label{fig:non-linearly-separable}
 \end{figure}
 
-The data contains two classes, but these cannot be linearly separated, any line drawn to separate the points in this two dimensional space will result in some of the data points being classified incorrectly.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{non-linearly-separable2.png}
+    \caption{Classification of non-linearly separable data TODO: Ref Alexander Ihler https://ics.uci.edu/~kkask/Spring-2018\%20CS273P/slides/05-linClassify.pdf }
+    \label{fig:non-linearly-separable-2}
+\end{figure}
 
 Another limitation of the perceptron is that it is only able to perform binary classification, and this results in only two options for the predicted class. This works well in data sets where the outcome variable is some sort of indicator variable, however for other use cases, such as data that needs to be classified into three classes, it will not work.
 

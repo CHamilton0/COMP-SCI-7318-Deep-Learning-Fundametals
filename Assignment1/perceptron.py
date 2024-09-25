@@ -5,7 +5,7 @@ from load_diabetes import load_diabetes_data
 training, test = load_diabetes_data("diabetes_scale.txt", 8)
 
 N = 0.01
-T = 1000000
+T = 1000
 w = np.zeros(training[0][0].shape[0])
 
 for t in range(T):
