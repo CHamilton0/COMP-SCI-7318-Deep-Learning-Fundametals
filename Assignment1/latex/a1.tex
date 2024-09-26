@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{algpseudocode}
+\usepackage{multirow}
 
 % Include other packages here, before hyperref.
 
@@ -127,149 +128,103 @@ The perceptron while able to converge to a prediction for linearly separable dat
 
 Another limitation of the perceptron is that it is only able to perform binary classification, and this results in only two options for the predicted class. This works well in data sets where the outcome variable is some sort of indicator variable, however for other use cases, such as data that needs to be classified into three classes, it will not work.
 
+%------------------------------------------------------------------------
+\section{Experimental Analysis}
 
-%-------------------------------------------------------------------------
-\subsection{Margins and page numbering}
+In order to achieve the aim of the experiment, to use a perceptron to predict diabetes, given a set of medical variables, the perceptron algorithm described above in the method section was implemented using Python.  The perceptron needs to have its weights trained in order to produce the separation of the data, and accurately perform predictions. The diabetes data has been pre-processed, with the features being scaled, and the outcome being set to -1 or 1, as required by the perceptron. The diabetes data used can be found at \url{https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html}, under the name `diabetes\_scale`. For the purposes of training the perceptron and testing its accuracy, the diabetes data was  randomly split into two sets, one for training and one for testing, with 80\% of data used for training the perceptron and 20% used for testing.
 
-All printed material, including text, illustrations, and charts, must be kept
-within a print area 6-7/8 inches (17.5 cm) wide by 8-7/8 inches (22.54 cm)
-high.
-Page numbers should be in footer with page numbers, centered and .75
-inches from the bottom of the page and make it start at the correct page
-number rather than the 4321 in the example.  To do this fine the line (around
-line 23)
-\begin{verbatim}
-%\ifcvprfinal\pagestyle{empty}\fi
-\setcounter{page}{4321}
-\end{verbatim}
-where the number 4321 is your assigned starting page.
+The parameters that can be applied to the training algorithm above are the number of iterations, and the learning rate. In order to determine the optimal learning date and number of iterations, the perceptron should be trained with each set of parameters, and the accuracy should be compared. The values chosen for this are training with 10, 100 and 1000 iterations, as well as 0.1, 0.01 and 0.001 learning rates. The perceptron was run 10 times for each of these sets of values, and the average accuracy produced from predicting the class of test data has been calculated.
 
-Make sure the first page is numbered by commenting out the first page being
-empty on line 46
-\begin{verbatim}
-%\thispagestyle{empty}
-\end{verbatim}
-
-
-%-------------------------------------------------------------------------
-\subsection{Type-style and fonts}
-
-Wherever Times is specified, Times Roman may also be used. If neither is
-available on your word processor, please use the font closest in
-appearance to Times to which you have access.
-
-MAIN TITLE. Center the title 1-3/8 inches (3.49 cm) from the top edge of
-the first page. The title should be in Times 14-point, boldface type.
-Capitalize the first letter of nouns, pronouns, verbs, adjectives, and
-adverbs; do not capitalize articles, coordinate conjunctions, or
-prepositions (unless the title begins with such a word). Leave two blank
-lines after the title.
-
-AUTHOR NAME(s) and AFFILIATION(s) are to be centered beneath the title
-and printed in Times 12-point, non-boldface type. This information is to
-be followed by two blank lines.
-
-The ABSTRACT and MAIN TEXT are to be in a two-column format.
-
-MAIN TEXT. Type main text in 10-point Times, single-spaced. Do NOT use
-double-spacing. All paragraphs should be indented 1 pica (approx. 1/6
-inch or 0.422 cm). Make sure your text is fully justified---that is,
-flush left and flush right. Please do not place any additional blank
-lines between paragraphs.
-
-Figure and table captions should be 9-point Roman type as in
-Figures~\ref{fig:onecol} and~\ref{fig:short}.  Short captions should be centred.
-
-\noindent Callouts should be 9-point Helvetica, non-boldface type.
-Initially capitalize only the first word of section titles and first-,
-second-, and third-order headings.
-
-FIRST-ORDER HEADINGS. (For example, {\large \bf 1. Introduction})
-should be Times 12-point boldface, initially capitalized, flush left,
-with one blank line before, and one blank line after.
-
-SECOND-ORDER HEADINGS. (For example, { \bf 1.1. Database elements})
-should be Times 11-point boldface, initially capitalized, flush left,
-with one blank line before, and one after. If you require a third-order
-heading (we discourage it), use 10-point Times, boldface, initially
-capitalized, flush left, preceded by one blank line, followed by a period
-and your text on the same line.
-
-%-------------------------------------------------------------------------
-\subsection{Footnotes}
-
-Please use footnotes\footnote {This is what a footnote looks like.  It
-often distracts the reader from the main flow of the argument.} sparingly.
-Indeed, try to avoid footnotes altogether and include necessary peripheral
-observations in
-the text (within parentheses, if you prefer, as in this sentence).  If you
-wish to use a footnote, place it at the bottom of the column on the page on
-which it is referenced. Use Times 8-point type, single-spaced.
-
-
-%-------------------------------------------------------------------------
-\subsection{References}
-
-List and number all bibliographical references in 9-point Times,
-single-spaced, at the end of your paper. When referenced in the text,
-enclose the citation number in square brackets, for
-example~\cite{Authors14}.  Where appropriate, include the name(s) of
-editors of referenced books.
-
-\begin{table}
+\begin{table}[h!]
 \begin{center}
-\begin{tabular}{|l|c|}
+\begin{tabular}{ |p{2em}|p{5em}|p{5em}|p{5em}| } 
 \hline
-Method & Frobnability \\
-\hline\hline
-Theirs & Frumpy \\
-Yours & Frobbly \\
-Ours & Makes one's heart Frob\\
+Run & Accuracy (\%) $\eta=0.1$ & Accuracy (\%) $\eta=0.01$ & Accuracy (\%) $\eta=0.001$\\
+\hline
+1 & 33.33 & 54.90 & 52.29 \\
+2 & 38.67 & 70.59 & 39.87\\
+3 & 69.93	& 62.09 & 58.17 \\
+4 & 66.01	& 56.21 & 51.63 \\
+5 & 73.86	& 66.01 & 66.01 \\
+6 & 71.24	& 40.52 & 69.28 \\
+7 & 64.71	& 73.86 & 66.01 \\
+8 & 75.16	& 69.93 & 34.64 \\
+9 & 74.51	& 50.98 & 71.90 \\
+10 & 69.28	& 65.36 & 35.95 \\
+\hline
+Ave & 63.66	& 61.05 & 54.58 \\
 \hline
 \end{tabular}
+\caption{Results of running experiments with 10 iterations}
+\label{table:10iterations}
 \end{center}
-\caption{Results.   Ours is better.}
 \end{table}
 
-%-------------------------------------------------------------------------
-\subsection{Illustrations, graphs, and photographs}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{2em}|p{5em}|p{5em}|p{5em}| } 
+\hline
+Run & Accuracy (\%) $\eta=0.1$ & Accuracy (\%) $\eta=0.01$ & Accuracy (\%) $\eta=0.001$\\
+\hline
+1 & 66.01 & 75.16 & 75.82 \\
+2 & 69.93 & 80.39 & 75.82 \\
+3 & 66.67 & 66.67 & 71.90 \\
+4& 67.97 & 77.78 & 64.71 \\
+5& 58.82 & 55.56 & 72.55 \\
+6& 56.21 & 73.20 & 60.13 \\
+7& 75.16 & 70.59 & 79.08 \\
+8& 62.75 & 66.01 & 70.59 \\
+9& 78.43 & 72.55 & 69.28 \\
+10& 67.97 & 75.16 & 68.63 \\
+\hline
+Ave& 66.99 & 71.31 & 70.85 \\
 
-All graphics should be centered.  Please ensure that any point you wish to
-make is resolvable in a printed copy of the paper.  Resize fonts in figures
-to match the font in the body text, and choose line widths which render
-effectively in print.  Many readers (and reviewers), even of an electronic
-copy, will choose to print your paper in order to read it.  You cannot
-insist that they do otherwise, and therefore must not assume that they can
-zoom in to see tiny details on a graphic.
+\hline
+\end{tabular}
+\caption{Results of running experiments with 100 iterations}
+\label{table:100iterations}
+\end{center}
+\end{table}
 
-When placing figures in \LaTeX, it's almost always best to use
-\verb+\includegraphics+, and to specify the  figure width as a multiple of
-the line width as in the example below
-{\small\begin{verbatim}
-   \usepackage[dvips]{graphicx} ...
-   \includegraphics[width=0.8\linewidth]
-                   {myfile.eps}
-\end{verbatim}
-}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{2em}|p{5em}|p{5em}|p{5em}| } 
+\hline
+Run & Accuracy (\%) $\eta=0.1$ & Accuracy (\%) $\eta=0.01$ & Accuracy (\%) $\eta=0.001$\\
+\hline
+1& 69.28& 67.97& 71.90 \\
+2& 63.40& 71.90& 64.05 \\
+3& 64.71& 64.71& 71.24 \\
+4& 58.82& 77.12& 64.71 \\
+5& 75.16& 79.08& 70.59 \\
+6& 66.67& 55.56& 64.71 \\
+7& 63.40& 66.67& 64.71 \\
+8& 74.51& 66.01& 73.86 \\
+9& 75.82& 65.36& 70.59 \\
+10& 74.51& 67.97& 59.48 \\
+\hline
+Ave& 68.63& 68.24& 67.58 \\
 
+\hline
+\end{tabular}
+\caption{Results of running experiments with 1000 iterations}
+\label{table:1000iterations}
+\end{center}
+\end{table}
 
-%-------------------------------------------------------------------------
-\subsection{Color}
+After running the code multiple times, it can be observed that the accuracy produced can be quite varied between a run. This implies that the data is likely not linearly separable, and since the weights are not able to converge, not all data points can be classified correctly. However, taking an average may be able to give a better representation of the accuracy for a given learning rate and number of iterations.
 
-Please refer to the author guidelines on the CVPR 2020 web page for a discussion
-of the use of color in your document.
+Based on the results seen in Table \ref{table:10iterations}, Table \ref{table:100iterations}, and Table \ref{table:1000iterations}, the highest accuracy was achieved using a learning rate of eta = 0.01 and training for 100 iterations. For the experiments where training was only done for 10 iterations, the accuracy on average was lower for all learning rates, however, it can be noted that for less iterations, a higher learning rate was more effective in producing a higher accuracy model. For experiments done with 1000 iterations, it can be seen that the accuracy is very close to the highest accuracy produced, and that the learning rate has only a small effect on the average accuracy. This is likely because after this larger number of iterations, the model will reach similar weights, regardless of the learning rate used.
+
 
 %------------------------------------------------------------------------
-\section{Final copy}
+\section{Code}
 
-You must include your signed IEEE copyright release form when you submit
-your finished paper. We MUST have this form before your paper can be
-published in the proceedings.
+The code written to implement the perceptron algorithm can be found at \url{https://github.com/CHamilton0/COMP-SCI-7318-Deep-Learning-Fundametals}. It has been implemented in Python 3.11.9. From the Assignment1 directory in the above repository. To load the diabetes data, run the perceptron training algorithm and run predictions on the data, ensure numpy is installed with python3 -m pip install numpy and then run the code with python3 perceptron.py. A helper script has been written in order to load the diabetes data in a form that the perceptron can work with. This loading function has been implemented in the `load\_diabetes.py` script. It will open the diabetes data file, and split the data in each line into the vector of variables and the outcome. These tuples of inputs and outcomes are then shuffled to randomise the data that is used for training and testing. In investigating the training and testing data, it was found that some rows in the data do not have all the variables set, for rows where not all variables are set, the script to load the data will leave the unset value as zero in the input vector, this will result in it not having an effect on the dot product done as part of training or classification. 
 
-Please direct any questions to the production editor in charge of these 
-proceedings at the IEEE Computer Society Press: 
-\url{https://www.computer.org/about/contact}. 
+The perceptron.py script contains the implementation of the perceptron algorithm used. Weights are initialised to zero, and are updated for the training data that the perceptron has classified incorrectly. This is repeated for the number of iterations specified by T. Finally, the test data is classified with the trained perceptron, as described in the algorithm, and checked against the label. The accuracy, as a percentage of correct classifications on the test data, is calculated and displayed in the terminal.
 
+%------------------------------------------------------------------------
 
 {\small
 \bibliographystyle{ieee_fullname}
