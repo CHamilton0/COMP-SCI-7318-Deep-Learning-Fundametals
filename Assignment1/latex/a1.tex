@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{algpseudocode}
 \usepackage{multirow}
+\usepackage{listings}
 
 % Include other packages here, before hyperref.
 
@@ -44,13 +45,7 @@ The University of Adelaide\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-   The is to be in fully-justified italicized text, at the top
-   of the left-hand column, below the author and affiliation
-   information. Use the word ``Abstract'' as the title, in 12-point
-   Times, boldface type, centered relative to the column, initially
-   capitalized. The abstract is to be in 10-point, single-spaced type.
-   Leave two blank lines after the Abstract, then begin the main text.
-   Look at previous CVPR abstracts to get a feel for style and length.
+   This paper presents an experimental analysis of using a perceptron to predict if an individual has diabetes based on a set of variables. As the prevalence of diabetes in Australians is increasing slowly, going from a rate of 3.3\% in 2001 to a rate of 5.3\% in 2022 \cite{diabetes-abs}, predicting diabetes without the need for a specific blood test is an important problem to solve. As a chronic condition, which can lead to "health complications, such as heart attack, stroke, and limb amputation"\cite{diabetes-abs}, diabetes is a disease that needs to be managed in individuals that have it. As of 2014, with 8.5\% of adults having diabetes, and more recent studies determining that diabetes is a direct cause of 1.5 million deaths\cite{diabetes-who}, it is more important than ever to accurately diagnose the disease. The objective of the analysis done here is to determine if a perceptron can be used to accurately predict whether an individual has diabetes based on a set of medical variables. A perceptron works by producing a weighted sum of the input variables provided to it, and calculating the prediction based on the weights.\cite{LIANG20201} In the training phase, the weights are updated based on the input variables used, when the data is classified wrong. This is repeated for a number of iterations, and a learning rate has been applied to update the weights by a smaller factor. The perceptron was trained on 80\% of the diabetes data provided, and then tested on the remaining 20\%. Multiple experiments were run, using different training parameters, and an accuracy of over 71\% was achieved with a learning rate of 0.01 and 100 iterations. More research could be done using different machine learning algorithms to achieve a higher accuracy of prediction.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -61,7 +56,7 @@ testing may be beneficial for the early diagnoses of the disease as well
 as increasing the number of people who get tested. Given a set of data
 relating to a person's health, we may be able to accurately identify
 whether or not that individual has diabetes, without the need for a
-specific blood test. The set of variables available in the dataset includes
+specific blood test. The dataset used for the analysis in this paper can be found at \url{https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html} under the heading 'diabetes'. This data was processed from the dataset available at  \url{https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database}. The set of variables available in the dataset includes
 the number of pregnancies, glucose concentration in an oral glucose
 concentration test, blood pressure, skin thickness, insulin level, BMI,
 diabetes pedigree function and age. These independent variables act as
@@ -77,9 +72,9 @@ over or under the threshold, the data is classified into either of the classes.
 
 \section{Method}
 
-The perceptron is an adaptive system that is able to recognise patterns in data as well as model the functions of the brain. It was first implemented in 1957 by Frank Rosenblatt at Cornell Aeronautical Laboratory as a way to classify inputs without the need for human action, similar to the human brain. Through research into the physical nervous system and the human brain, discoveries have been made into neuron pathways, and how neurons interact with one another. In humans, it has been discovered that the initial network of connections between neurons is mostly random and as neural activity occurs during development, the reactions of cells to a stimulus changes. Another key result that was found is that when a many stimuli are applied, connections are often formed between the same sets of neurons for similar stimuli and are formed between different sets of neurons for stimuli that are unalike. 
+The perceptron is an adaptive system that is able to recognise patterns in data as well as model the functions of the brain. It was first implemented in 1957 by Frank Rosenblatt at Cornell Aeronautical Laboratory as a way to classify inputs without the need for human action, similar to the human brain \cite{frosenblatt:1958}. Through research into the physical nervous system and the human brain, discoveries have been made into neuron pathways, and how neurons interact with one another. In humans, it has been discovered that the initial network of connections between neurons is mostly random and as neural activity occurs during development, the reactions of cells to a stimulus changes \cite{block:1962}. Another key result that was found is that when a many stimuli are applied, connections are often formed between the same sets of neurons for similar stimuli and are formed between different sets of neurons for stimuli that are unalike. \cite{}
 
-These discoveries have been applied in the development of the perceptron for the binary classification of data. The result of the similar stimuli causing activation for similar neurons has been taken and from this, the perceptron has been designed to classify data to the same class that similar training data was labelled as. A perceptron takes in an input of multiple variables, and based on a set of weights that it has been trained for, generates a weighted sum of these variables. For a perceptron, this weighted sum is used to classify the output into either of the two possible classes, if the sum is greater than or equal to 0, the will be given the positive class (+1) and if it is less than 0, it will be given the negative class (-1).
+These discoveries have been applied in the development of the perceptron for the binary classification of data. The result of the similar stimuli causing activation for similar neurons has been taken and from this, the perceptron has been designed to classify data to the same class that similar training data was labelled as. A perceptron takes in an input of multiple variables, and based on a set of weights that it has been trained for, generates a weighted sum of these variables. For a perceptron, this weighted sum is used to classify the output into either of the two possible classes, if the sum is greater than or equal to 0, the will be given the positive class (+1) and if it is less than 0, it will be given the negative class (-1).\cite{LIANG20201}
 
 In order for the perceptron to be able to accurately classify data, it must have weights trained based on a set of inputs which are labelled with correct classes already. The perceptron training algorithm involves setting all weights incorrectly at first, and then iteratively updating the weights based on the product of the training class and the training input data. This algorithm can be written mathematically as:
 
@@ -100,7 +95,7 @@ The perceptron training algorithm is as follows:
 
     $\vec{w_{t+1}} = \vec{w_t} + \eta \sum_{i=1}^n(y_i \vec{x_i} 1_{\{ y_i (\vec{x_i} \cdot \vec{w_t}  ) \leq 0 \}})$
 \EndFor
-\end{algorithmic}
+\end{algorithmic} \cite{adelaideunilecture}
 
 We denote the trained weights of the perceptron as $w^*$ and this is the same as $w_T$, the weights as updated at the end of the final epoch.
 
@@ -110,19 +105,19 @@ Prediction using this trained perceptron is then done by taking the dot product 
 
 Since a weighted sum is used as the input to the perceptron, computers are able to very quickly perform the dot products and summations required for the training of a perceptron, as well as the classification of data. This makes the method very useful to quickly classify linearly separable data into one of two classes, given that the weights have been appropriately set to separate the data for the problem to be solved. Setting the weights correctly is the task of the training algorithm that has been outlined above and means that the set of training data points should be large to allow for good generalisation to data points that have not been seen.
 
-The perceptron while able to converge to a prediction for linearly separable data, has some limitations. The first limitation of the perceptron algorithm is that it is only able to converge if the data is linearly separable. This limits the use cases that the perceptron has, a simple example of this is shown in Figure \ref{fig:non-linearly-separable}. Since a lot of data in the real world will not be perfectly linearly separable, the perceptron trained and tested on real data is not likely to have 100\% accuracy. However, this may be acceptable in cases where the perceptron is able to accurately classify test data, even though convergence was not achieved. An example of this is shown in Figure \ref{fig:non-linearly-separable-2}. The data contains two classes, but these cannot be linearly separated, any line drawn to separate the points in this two dimensional space will result in some of the data points being classified incorrectly. In the case of Figure \ref{fig:non-linearly-separable}, the perceptron is not a good solution to classify data points into either of the available classes, as the accuracy will be low. However, in the case of Figure \ref{fig:non-linearly-separable-2}, even though the data is not linearly separable, the perceptron is still an effective method for classifying data points, in the example, only three points are incorrectly labelled based on the linear separation provided.
+The perceptron while able to converge to a prediction for linearly separable data, has some limitations. The first limitation of the perceptron algorithm is that it is only able to converge if the data is linearly separable. \cite{perceptron-lecture} This limits the use cases that the perceptron has, a simple example of this is shown in Figure \ref{fig:non-linearly-separable}. Since a lot of data in the real world will not be perfectly linearly separable, the perceptron trained and tested on real data is not likely to have 100\% accuracy. However, this may be acceptable in cases where the perceptron is able to accurately classify test data, even though convergence was not achieved. An example of this is shown in Figure \ref{fig:non-linearly-separable-2}. The data contains two classes, but these cannot be linearly separated, any line drawn to separate the points in this two dimensional space will result in some of the data points being classified incorrectly. In the case of Figure \ref{fig:non-linearly-separable}, the perceptron is not a good solution to classify data points into either of the available classes, as the accuracy will be low. However, in the case of Figure \ref{fig:non-linearly-separable-2}, even though the data is not linearly separable, the perceptron is still an effective method for classifying data points, in the example, only three points are incorrectly labelled based on the linear separation provided.
 
 \begin{figure}
     \centering
     \includegraphics[width=1\linewidth]{non-linearly-separable.png}
-    \caption{Example of non-linearly separable data}
+    \caption{Example of non-linearly separable data} \cite{perceptron-lecture}
     \label{fig:non-linearly-separable}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=1\linewidth]{non-linearly-separable2.png}
-    \caption{Classification of non-linearly separable data TODO: Ref Alexander Ihler https://ics.uci.edu/~kkask/Spring-2018\%20CS273P/slides/05-linClassify.pdf }
+    \caption{Classification of non-linearly separable data }\cite{linClassify-lecture}
     \label{fig:non-linearly-separable-2}
 \end{figure}
 
@@ -131,7 +126,7 @@ Another limitation of the perceptron is that it is only able to perform binary c
 %------------------------------------------------------------------------
 \section{Experimental Analysis}
 
-In order to achieve the aim of the experiment, to use a perceptron to predict diabetes, given a set of medical variables, the perceptron algorithm described above in the method section was implemented using Python.  The perceptron needs to have its weights trained in order to produce the separation of the data, and accurately perform predictions. The diabetes data has been pre-processed, with the features being scaled, and the outcome being set to -1 or 1, as required by the perceptron. The diabetes data used can be found at \url{https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html}, under the name `diabetes\_scale`. For the purposes of training the perceptron and testing its accuracy, the diabetes data was  randomly split into two sets, one for training and one for testing, with 80\% of data used for training the perceptron and 20% used for testing.
+In order to achieve the aim of the experiment, to use a perceptron to predict diabetes, given a set of medical variables, the perceptron algorithm described above in the method section was implemented using Python.  The perceptron needs to have its weights trained in order to produce the separation of the data, and accurately perform predictions. The diabetes data has been processed, with the features being scaled, and the outcome being set to -1 or 1, as required by the perceptron. The diabetes data used can be found at \url{https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html}, under the name `diabetes\_scale`. For the purposes of training the perceptron and testing its accuracy, the diabetes data was  randomly split into two sets, one for training and one for testing, with 80\% of data used for training the perceptron and 20\% used for testing.
 
 The parameters that can be applied to the training algorithm above are the number of iterations, and the learning rate. In order to determine the optimal learning date and number of iterations, the perceptron should be trained with each set of parameters, and the accuracy should be compared. The values chosen for this are training with 10, 100 and 1000 iterations, as well as 0.1, 0.01 and 0.001 learning rates. The perceptron was run 10 times for each of these sets of values, and the average accuracy produced from predicting the class of test data has been calculated.
 
@@ -220,15 +215,28 @@ Based on the results seen in Table \ref{table:10iterations}, Table \ref{table:10
 %------------------------------------------------------------------------
 \section{Code}
 
-The code written to implement the perceptron algorithm can be found at \url{https://github.com/CHamilton0/COMP-SCI-7318-Deep-Learning-Fundametals}. It has been implemented in Python 3.11.9. From the Assignment1 directory in the above repository. To load the diabetes data, run the perceptron training algorithm and run predictions on the data, ensure numpy is installed with python3 -m pip install numpy and then run the code with python3 perceptron.py. A helper script has been written in order to load the diabetes data in a form that the perceptron can work with. This loading function has been implemented in the `load\_diabetes.py` script. It will open the diabetes data file, and split the data in each line into the vector of variables and the outcome. These tuples of inputs and outcomes are then shuffled to randomise the data that is used for training and testing. In investigating the training and testing data, it was found that some rows in the data do not have all the variables set, for rows where not all variables are set, the script to load the data will leave the unset value as zero in the input vector, this will result in it not having an effect on the dot product done as part of training or classification. 
+The code written to implement the perceptron algorithm can be found at \url{https://github.com/CHamilton0/COMP-SCI-7318-Deep-Learning-Fundametals}, under the 'Assignment1' directory. It has been implemented in Python 3.11.9. To load the diabetes data, run the perceptron training algorithm and run predictions on the data, ensure numpy is installed with:
+\begin{lstlisting}[language=bash]
+  $ python3 -m pip install numpy
+\end{lstlisting}
+and then run the code with:
+\begin{lstlisting}[language=bash]
+  $ python3 perceptron.py
+\end{lstlisting}
+A helper script has been written in order to load the diabetes data in a form that the perceptron can work with. This loading function has been implemented in the `load\_diabetes.py` script. It will open the diabetes data file, and split the data in each line into the vector of variables and the outcome. These tuples of inputs and outcomes are then shuffled to randomise the data that is used for training and testing. In investigating the training and testing data, it was found that some rows in the data do not have all the variables set, for rows where not all variables are set, the script to load the data will leave the unset value as zero in the input vector, this will result in it not having an effect on the dot product done as part of training or classification. 
 
-The perceptron.py script contains the implementation of the perceptron algorithm used. Weights are initialised to zero, and are updated for the training data that the perceptron has classified incorrectly. This is repeated for the number of iterations specified by T. Finally, the test data is classified with the trained perceptron, as described in the algorithm, and checked against the label. The accuracy, as a percentage of correct classifications on the test data, is calculated and displayed in the terminal.
+The `perceptron.py` script contains the implementation of the perceptron algorithm used. Weights are initialised to zero, and are updated for the training data that the perceptron has classified incorrectly. This is repeated for the number of iterations specified by $T$. Finally, the test data is classified with the trained perceptron, as described in the algorithm, and checked against the label. The accuracy, as a percentage of correct classifications on the test data, is calculated and displayed in the terminal.
+
+%------------------------------------------------------------------------
+\section{Conclusion}
+
+The approach outline in this paper, using a perceptron to predict diabetes based on medical variables, has proven effective, achieving an accuracy of 71.31\%. This approach to predicting diabetes does require knowledge of multiple medical variables in an individual, however, it does not require the specific blood test for the glucose. While the accuracy of this method is not high enough to be used as the sole method to determine if an individual has diabetes, this method could be used by medical professionals regularly, with the result of this being used to decide if a glucose test is required for the diagnosis. By doing this, medical professionals may be able to diagnose diabetes in more of the population, allowing people to manage their diabetes earlier, and reduce or prevent the effects of diabetes.
 
 %------------------------------------------------------------------------
 
 {\small
 \bibliographystyle{ieee_fullname}
-\bibliography{egbib}
+\bibliography{refs}
 }
 
 \end{document}
