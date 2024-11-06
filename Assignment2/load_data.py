@@ -11,11 +11,11 @@ def unpickle(file):
 
 def get_training_data():
     data_paths = [
-        "C:\\Users\\chris\\OneDrive\\University\\2024\\Deep Learning Fundamentals\\assignment2\\cifar-10-batches-py\\data_batch_1",
-        "C:\\Users\\chris\\OneDrive\\University\\2024\\Deep Learning Fundamentals\\assignment2\\cifar-10-batches-py\\data_batch_2",
-        "C:\\Users\\chris\\OneDrive\\University\\2024\\Deep Learning Fundamentals\\assignment2\\cifar-10-batches-py\\data_batch_3",
-        "C:\\Users\\chris\\OneDrive\\University\\2024\\Deep Learning Fundamentals\\assignment2\\cifar-10-batches-py\\data_batch_4",
-        "C:\\Users\\chris\\OneDrive\\University\\2024\\Deep Learning Fundamentals\\assignment2\\cifar-10-batches-py\\data_batch_5",
+        "/home/chris/uni/cifar-10-batches-py/data_batch_1",
+        "/home/chris/uni/cifar-10-batches-py/data_batch_2",
+        "/home/chris/uni/cifar-10-batches-py/data_batch_3",
+        "/home/chris/uni/cifar-10-batches-py/data_batch_4",
+        "/home/chris/uni/cifar-10-batches-py/data_batch_5",
     ]
 
     data = []
@@ -33,7 +33,7 @@ def get_training_data():
 
 
 def get_test_data():
-    path = "C:\\Users\\chris\\OneDrive\\University\\2024\\Deep Learning Fundamentals\\assignment2\\cifar-10-batches-py\\test_batch"
+    path = "/home/chris/uni/cifar-10-batches-py/test_batch"
 
     batch_data = get_data(path)
     data = batch_data["data"]
