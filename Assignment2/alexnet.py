@@ -41,10 +41,10 @@ def compile_alexnet_model(image_width, image_height, num_classes, learning_rate)
             tf.keras.layers.Flatten(),
             # To FC layer 1
             tf.keras.layers.Dense(4096, activation="relu"),
-            # add dropout 0.5 ==> tf.keras.layers.Dropout(0.5),
+            tf.keras.layers.Dropout(0.8),
             # To FC layer 2
             tf.keras.layers.Dense(4096, activation="relu"),
-            # add dropout 0.5 ==> tf.keras.layers.Dropout(0.5),
+            tf.keras.layers.Dropout(0.8),
             tf.keras.layers.Dense(num_classes, activation="softmax"),
         ]
     )

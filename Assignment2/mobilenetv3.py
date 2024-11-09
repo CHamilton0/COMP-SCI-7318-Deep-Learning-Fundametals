@@ -3,7 +3,7 @@ import keras
 
 def compile_mobilenet_v3_model(image_width, image_height, num_classes, learning_rate):
     # Define and compile the model
-    mobilenet = keras.applications.MobileNetV3Small(
+    mobilenet = keras.applications.MobileNetV3Large(
         include_top=False, weights=None, input_shape=(image_width, image_height, 3)
     )
 
