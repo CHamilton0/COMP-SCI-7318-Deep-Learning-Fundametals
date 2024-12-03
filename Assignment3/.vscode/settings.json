@@ -1,0 +1,12 @@
+{
+    "mypy.dmypyExecutable": "${workspaceFolder}/.venv/bin/dmypy",
+    "mypy.extraArguments": [
+        "--ignore-missing-imports",
+        "--strict"
+    ],
+    "mypy.checkNotebooks": true,
+    "mypy.mypyExecutable": "${workspaceFolder}/.venv/bin/mypy",
+    "python.linting.mypyArgs": [
+        "--cache-dir=.mypy_cache/.vscode"
+    ],
+}
