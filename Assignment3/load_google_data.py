@@ -1,9 +1,6 @@
 from pathlib import Path
-from typing import cast
 
 import pandas as pd
-import numpy.typing as npt
-import numpy as np
 
 
 def normalise(value: float, min_val: float, max_val: float) -> float:
@@ -15,11 +12,9 @@ def unnormalise(value: float, min_val: float, max_val: float) -> float:
 
 
 # Google Data is CSV with headers Date, Open, High, Low, Close, Volume
-
-
 def load_google_stock_data(
     filepath: Path,
-) -> tuple[npt.NDArray[np.float32], dict[str, tuple[float, float]]]:
+) -> tuple[pd.DataFrame, dict[str, tuple[float, float]]]:
     df = pd.read_csv(filepath)
     df["Volume"] = df["Volume"].str.replace(",", "")  # Remove commas
     for col in ["Open", "High", "Low", "Close", "Volume"]:
@@ -40,8 +35,4 @@ def load_google_stock_data(
         min_val, max_val = normalization_params[col]
         df[col] = normalise(df[col], min_val, max_val)
 
-    data = cast(
-        npt.NDArray[np.float32],
-        df[["Open", "High", "Low", "Close", "Volume"]].to_numpy(np.float32),
-    )
-    return (data, normalization_params)
+    return (df, normalization_params)
