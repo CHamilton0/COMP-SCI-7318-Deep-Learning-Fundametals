@@ -11,7 +11,7 @@ def unnormalise(value: float, min_val: float, max_val: float) -> float:
     return value * (max_val - min_val) + min_val
 
 
-# Google Data is CSV with headers Date, Open, High, Low, Close, Volume
+# Stock Data is CSV with headers Date, Open, High, Low, Close, Volume
 def load_stock_data(
     filepath: Path,
     filename: str,
