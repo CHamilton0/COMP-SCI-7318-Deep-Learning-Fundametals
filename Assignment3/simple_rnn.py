@@ -44,6 +44,7 @@ class SimpleRNN(RNN):
 
     def forward(self, inputs: list[npt.NDArray[np.float64]]) -> float:
         self.hs = []  # To store hidden states
+        # Step through each input and calculate hidden states
         for x in inputs:
             y = self.step(x)
             self.hs.append(self.h)
@@ -52,31 +53,38 @@ class SimpleRNN(RNN):
     def backward(
         self,
         inputs: list[pd.Series],
-        target: pd.Series,
+        target: float,
         output: float,
         learning_rate: float = 0.01,
     ) -> None:
-        # Compute gradient of the loss with respect to output
-        d_loss = 2 * (output - target)  # Derivative of MSE
+        # Initialize gradients
+        gradient_W_xh = np.zeros_like(self.W_xh)
+        gradient_W_hh = np.zeros_like(self.W_hh)
+        gradient_W_hy = np.zeros_like(self.W_hy)
 
-        # Backpropagate through the output layer
-        d_W_hy = np.dot(d_loss, self.h.T)
+        # Derivative of the loss w.r.t. the output using MSE loss
+        dL_dy = -2 * (target - output)
 
-        # Initialize hidden state gradients
-        d_h = np.dot(self.W_hy.T, d_loss)
-        d_W_hh = np.zeros_like(self.W_hh)
-        d_W_xh = np.zeros_like(self.W_xh)
+        dL_dh_next = np.zeros_like(self.hs[0])  # Initialize hidden gradient
 
-        # Backpropagate through time
-        for t in reversed(range(len(inputs))):
-            d_h_raw = (1 - self.hs[t] ** 2) * d_h  # Derivative of tanh
-            d_W_hh += np.dot(
-                d_h_raw, self.hs[t - 1].T if t > 0 else np.zeros_like(self.h).T
-            )
-            d_W_xh += np.dot(d_h_raw, inputs[t].T)
-            d_h = np.dot(self.W_hh.T, d_h_raw)
+        for t in reversed(range(len(inputs))):  # Propoagate backwards through time
+            # Gradient w.r.t. weights from hidden state to output layer
+            gradient_W_hy += np.outer(dL_dy, self.hs[t])
+
+            # Backpropagate into hidden state
+            dL_dh_sum = np.dot(self.W_hy.T, dL_dy) + dL_dh_next  # Combine gradients
+
+            # Gradient w.r.t. hidden state (calculated with tanh)
+            dL_dh = (1 - self.hs[t] ** 2) * dL_dh_sum
+
+            # Calculate gradients for W_xh and W_hh
+            gradient_W_xh += np.outer(dL_dh, inputs[t])
+            gradient_W_hh += np.outer(dL_dh, self.hs[t - 1] if t > 0 else 0)
+
+            # Pass the gradient to next step in backwards propagation
+            dL_dh_next = np.dot(self.W_hh.T, dL_dh)
 
         # Update weights
-        self.W_hy -= learning_rate * d_W_hy
-        self.W_hh -= learning_rate * d_W_hh
-        self.W_xh -= learning_rate * d_W_xh
+        self.W_xh -= learning_rate * gradient_W_xh
+        self.W_hh -= learning_rate * gradient_W_hh
+        self.W_hy -= learning_rate * gradient_W_hy
