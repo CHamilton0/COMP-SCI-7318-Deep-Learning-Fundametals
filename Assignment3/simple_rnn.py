@@ -69,17 +69,17 @@ class SimpleRNN(RNN):
 
         for t in reversed(range(len(inputs))):  # Propoagate backwards through time
             # Gradient w.r.t. weights from hidden state to output layer
-            gradient_W_hy += np.outer(dL_dy, self.hs[t])
+            gradient_W_hy += dL_dy * self.hs[t].T
 
             # Backpropagate into hidden state
-            dL_dh_sum = np.dot(self.W_hy.T, dL_dy) + dL_dh_next  # Combine gradients
+            dL_dh_sum = self.W_hy.T * dL_dy + dL_dh_next  # Combine gradients
 
             # Gradient w.r.t. hidden state (calculated with tanh)
             dL_dh = (1 - self.hs[t] ** 2) * dL_dh_sum
 
             # Calculate gradients for W_xh and W_hh
-            gradient_W_xh += np.outer(dL_dh, inputs[t])
-            gradient_W_hh += np.outer(dL_dh, self.hs[t - 1] if t > 0 else 0)
+            gradient_W_xh += np.dot(dL_dh, inputs[t].T)
+            gradient_W_hh += np.dot(dL_dh, self.hs[t - 1].T if t > 0 else 0)
 
             # Pass the gradient to next step in backwards propagation
             dL_dh_next = np.dot(self.W_hh.T, dL_dh)
